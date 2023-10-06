@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Morse to text</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* Общие стили */
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+        body::-webkit-scrollbar {
+          width: 10px;
+          background-color: #f9f9fd;
+        }
+
+        body::-webkit-scrollbar-thumb {
+          background-color: #34134f;
+        }
+
+        body::-webkit-scrollbar-track {
+          -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+          border-radius: 10px;
+          background-color: #f9f9fd;
+        }
+        h1, h2 {
+            margin: 0;
+        }
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* Стили хедера */
+        header {
+            background-color: #34134f;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 999;
+        }
+        #header-logo {
+            font-weight: bold;
+            font-size: 24px;
+            color: #fff;
+        }
+
+        /* Стили основной области */
+        main {
+            max-width: 960px;
+            margin: 80px auto 20px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        form {
+            flex: 1;
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: none;
+            background-color: #f2f2f2;
+            font-size: 16px;
+            color: #333;
+            resize: none;
+        }
+        button {
+            display: block;
+            width: 100%;
+            border: none;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #9a18be;
+            padding: 16px;
+            /*margin-top: 20px;*/
+            transition: background-color 0.3s ease;
+            border-radius: 4px; /* Добавляем свойство для убирания скругления */
+        }
+        button:hover {
+            background-color: #6d1186;
+        }
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1 id="header-logo">MORSE TO TEXT</h1>
+        <a href="/api">API</a>
+    </header>
+
+    <main>
+        <form id="input-form">
+            <textarea id="input-text" rows="5" placeholder="Введите для перевода"></textarea>
+        </form>
+
+        <button id="translate-btn" onclick="translate()">Перевести</button>
+
+        <form id="output-form">
+            <textarea id="output-text" rows="5" readonly></textarea>
+        </form>
+
+        <p><b>Азбука Морзе</b> - это система кодирования букв и символов с помощью комбинаций длинных и коротких сигналов. Эта система была разработана и использовалась для передачи сообщений по телеграфу и радиосвязи.</p>
+        <p>История создания азбуки Морзе начинается с работы американского художника и изобретателя Сэмюэля Морзе и его соавтора Альфреда Вэйла. В 1830-х годах они разработали электрический телеграф, который мог передавать сообщения с помощью электрических импульсов. Для кодирования букв и символов они использовали комбинации длинных и коротких сигналов, которые стали известны как азбука Морзе.</p>
+        <p>Первое сообщение, отправленное с использованием азбуки Морзе, было передано в 1844 году между Вашингтоном и Балтимором в США. С течением времени азбука Морзе стала широко использоваться в международной радиосвязи и телеграфии.</p>
+        <p><b>Факты об азбуке Морзе:</b></p>
+        <ul>
+            <li>Азбука Морзе состоит из комбинаций точек и тире, где точка представляет короткий сигнал, а тире - длинный сигнал.</li>
+            <li>В начале использования азбуки Морзе для телеграфии, операторы использовали звуковые сигналы, чтобы передавать сообщения. Позже, с развитием радиосвязи, сигналы стали передаваться с помощью радиоволн.</li>
+            <li>Азбука Морзе использовалась во многих областях, включая морскую связь, авиацию и армию. Она была широко применяется до появления более современных и эффективных систем связи.</li>
+            <li>В настоящее время азбука Морзе сохраняет свою историческую ценность и используется любителями радиосвязи и энтузиастами.</li>
+        </ul>
+        <p><b>Азбука Морзе</b> - это важная часть истории связи и имеет свой особый шарм и уникальность в наше современное время.</p>
+    </main>
+</body>
+</html>
