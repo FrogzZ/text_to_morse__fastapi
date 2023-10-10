@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
+    <link id="favicon" rel="icon" type="image/x-icon" href="../static/favicon.ico">
     <title>Morse to text</title>
+    <script src="script.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         /* Общие стили */
@@ -62,7 +64,7 @@
         form {
             flex: 1;
             margin-right: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         textarea {
             width: 100%;
@@ -83,7 +85,7 @@
             color: #fff;
             background-color: #9a18be;
             padding: 16px;
-            /*margin-top: 20px;*/
+            margin-bottom: 10px;
             transition: background-color 0.3s ease;
             border-radius: 4px; /* Добавляем свойство для убирания скругления */
         }
@@ -105,10 +107,10 @@
             <textarea id="input-text" rows="5" placeholder="Введите для перевода"></textarea>
         </form>
 
-        <button id="translate-btn" onclick="translate()">Перевести</button>
+        <button id="translate-btn">Перевести</button>
 
         <form id="output-form">
-            <textarea id="output-text" rows="5" readonly></textarea>
+            <textarea id="output-text" rows="5" placeholder="Тут будет перевод" readonly></textarea>
         </form>
 
         <p><b>Азбука Морзе</b> - это система кодирования букв и символов с помощью комбинаций длинных и коротких сигналов. Эта система была разработана и использовалась для передачи сообщений по телеграфу и радиосвязи.</p>
@@ -123,5 +125,6 @@
         </ul>
         <p><b>Азбука Морзе</b> - это важная часть истории связи и имеет свой особый шарм и уникальность в наше современное время.</p>
     </main>
+
 </body>
 </html>
