@@ -3,7 +3,6 @@
 <head>
     <link id="favicon" rel="icon" type="image/x-icon" href="../static/favicon.ico">
     <title>Morse to text</title>
-    <script src="script.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
@@ -51,6 +50,19 @@
             color: #fff;
         }
 
+        @media (max-width: 500px){
+            #header-logo {
+                font-weight: bold;
+                font-size: 16px;
+                color: #fff;
+            }
+        }
+
+        menu {
+            display: flex;
+            align-items: center;
+        }
+
         main {
             max-width: 960px;
             margin: 80px auto 20px auto;
@@ -90,14 +102,15 @@
             background-color: #6d1186;
         }
 
-
     </style>
 </head>
 <body>
     <header>
         <a href="/"><h1 id="header-logo">TEXT TO MORSE</h1></a>
-<!--        <a href="/"><img src="../static/ru.png" width="35" height="35" alt="lang"></a>-->
+<!--        <a href="/"><img src="../static/ru.png" width="30" height="30" alt="lang"></a>-->
 
+        <menu>
+            <img id="langImage" src="../static/ru.png" width="30" height="30" alt="lang" onclick="changeImage()">
             <p>
                 <label for="lang"></label>
                 <select id="lang" name="lang">
@@ -111,6 +124,9 @@
                     <option value="mt">Morse -> Text</option>
                 </select>
             </p>
+        </menu>
+
+
     </header>
 
     <main>
@@ -139,6 +155,21 @@
 
 
   <script>
+
+      function changeImage() {
+      var langImage = document.getElementById("langImage");
+      var currentSrc = langImage.getAttribute("src");
+
+      var selectedLang = langSelect.value;
+      langImage.setAttribute("src", newSrc);
+      var newSrc = (currentSrc === "../static/ru.png") ? "../static/usa.png" : "../static/ru.png";
+      var newLang = (currentSrc === "../static/ru.png") ? "eng" : "ru";
+      langImage.setAttribute("src", newSrc);
+      localStorage.setItem("selectedLang", newLang);
+      localStorage.setItem("selectedImg", newSrc);
+      }
+
+
     const langSelect = document.getElementById("lang");
     const trSelect = document.getElementById("how_tr");
 
@@ -170,7 +201,6 @@
 
         const selectedLang = localStorage.getItem("selectedLang");
         const selectedTr = localStorage.getItem("selectedTr");
-        console.log(inputText)
         if (selectedLang) {
             fetch('/translate/' + selectedTr + '/' + selectedLang + '/' + '-' + inputText)
                 .then(response => response.json())
@@ -186,7 +216,8 @@
         } else {
           console.log("Выбранный язык не найден в localStorage");
           localStorage.setItem("selectedLang", 'ru');
-          fetch('/translate/' + selectedTr + '/' + selectedLang + '/' + inputText)
+          localStorage.setItem("selectedTr", 'tm');
+          fetch('/translate/' + 'tm' + '/' + 'ru' + '/' + inputText)
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById("output-text").removeAttribute("hidden");

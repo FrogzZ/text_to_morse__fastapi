@@ -46,7 +46,6 @@ async def translate(method: str, lang: str, input_text: str):
                 res += reverse_list[i.upper()]
             elif i == '':
                 res += ' '
-        print(reverse_list)
         return {'result': res}
 
 
