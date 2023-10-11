@@ -107,7 +107,7 @@
             <textarea id="input-text" rows="5" placeholder="Введите для перевода"></textarea>
         </form>
 
-        <button id="translate-btn">Перевести</button>
+        <button id="bTranslate">Перевести</button>
 
         <form id="output-form">
             <textarea id="output-text" rows="5" placeholder="Тут будет перевод" readonly></textarea>
@@ -125,6 +125,23 @@
         </ul>
         <p><b>Азбука Морзе</b> - это важная часть истории связи и имеет свой особый шарм и уникальность в наше современное время.</p>
     </main>
+
+
+  <script>
+    bTranslate.onclick = function(){
+        let inputText = document.getElementById("input-text").value;
+
+        fetch('/some_endpoint')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("output-text").value = data.some_result;
+            })
+                .catch(error => {
+                console.log(error);
+            });
+    }
+  </script>
+
 
 </body>
 </html>

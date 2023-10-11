@@ -22,6 +22,11 @@ async def api(request: Request):
     return {'1': 1}
 
 
+@app.get("/some_endpoint")
+async def api(request: Request):
+    return {'': 22}
+
+
 @app.exception_handler(StarletteHTTPException)
 async def my_custom_exception_handler(request: Request, exc: StarletteHTTPException):
     if exc.status_code == 404:
@@ -29,3 +34,5 @@ async def my_custom_exception_handler(request: Request, exc: StarletteHTTPExcept
     else:
         # Just use FastAPI's built-in handler for other errors
         return await http_exception_handler(request, exc)
+
+
