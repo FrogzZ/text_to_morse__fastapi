@@ -4,6 +4,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.exception_handlers import http_exception_handler
+import ar as morse
 
 app = FastAPI()
 templates = Jinja2Templates(directory='templates')
@@ -22,9 +23,17 @@ async def api(request: Request):
     return {'1': 1}
 
 
-@app.get("/some_endpoint")
-async def api(request: Request):
-    return {'': 22}
+@app.get("/translate/{lang}/{input_text}")
+async def translate(lang: str, input_text: str):
+    lang_list = morse.ru if lang == 'ru' else morse.eu
+    res = ''
+    for i in input_text.upper():
+        if i in lang_list:
+            res += lang_list[i]
+            res += ' '
+        elif i == ' ':
+            res += '  '
+    return {'result': res}
 
 
 @app.exception_handler(StarletteHTTPException)

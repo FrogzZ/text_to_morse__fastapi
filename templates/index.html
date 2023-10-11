@@ -6,7 +6,6 @@
     <script src="script.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        /* Общие стили */
         body {
             margin: 0;
             font-family: 'Montserrat', sans-serif;
@@ -33,7 +32,6 @@
             text-decoration: none;
         }
 
-        /* Стили хедера */
         header {
             background-color: #34134f;
             position: fixed;
@@ -53,7 +51,6 @@
             color: #fff;
         }
 
-        /* Стили основной области */
         main {
             max-width: 960px;
             margin: 80px auto 20px auto;
@@ -87,7 +84,7 @@
             padding: 16px;
             margin-bottom: 10px;
             transition: background-color 0.3s ease;
-            border-radius: 4px; /* Добавляем свойство для убирания скругления */
+            border-radius: 4px;
         }
         button:hover {
             background-color: #6d1186;
@@ -99,7 +96,14 @@
 <body>
     <header>
         <a href="/"><h1 id="header-logo">MORSE TO TEXT</h1></a>
-        <a href="/api">API</a>
+<!--        <a href="/"><img src="../static/ru.png" width="35" height="35" alt="lang"></a>-->
+            <p>
+                <label for="lang"></label>
+                <select id="lang" name="lang">
+                    <option value="ru">RU</option>
+                    <option value="eng">ENG</option>
+                </select>
+            </p>
     </header>
 
     <main>
@@ -110,7 +114,7 @@
         <button id="bTranslate">Перевести</button>
 
         <form id="output-form">
-            <textarea id="output-text" rows="5" placeholder="Тут будет перевод" readonly></textarea>
+            <textarea id="output-text" rows="5" placeholder="Тут будет перевод" readonly hidden></textarea>
         </form>
 
         <p><b>Азбука Морзе</b> - это система кодирования букв и символов с помощью комбинаций длинных и коротких сигналов. Эта система была разработана и использовалась для передачи сообщений по телеграфу и радиосвязи.</p>
@@ -128,17 +132,41 @@
 
 
   <script>
+    const langSelect = document.getElementById("lang");
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const selectedLang = localStorage.getItem("selectedLang");
+
+      if (selectedLang) {
+        langSelect.value = selectedLang;
+      }
+    });
+
+    langSelect.addEventListener("change", function() {
+      const selectedLang = langSelect.value;
+      localStorage.setItem("selectedLang", selectedLang);
+    });
+
+
     bTranslate.onclick = function(){
         let inputText = document.getElementById("input-text").value;
 
-        fetch('/some_endpoint')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("output-text").value = data.some_result;
-            })
+        const selectedLang = localStorage.getItem("selectedLang");
+
+        if (selectedLang) {
+            fetch('/translate/'+ selectedLang + '/' + inputText)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("output-text").removeAttribute("hidden");
+                    document.getElementById("output-text").value = data.result;
+                })
                 .catch(error => {
-                console.log(error);
-            });
+                    console.log(error);
+                });
+          console.log("Выбранный язык:", selectedLang);
+        } else {
+          console.log("Выбранный язык не найден в localStorage");
+        }
     }
   </script>
 
