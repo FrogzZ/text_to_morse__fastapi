@@ -95,13 +95,20 @@
 </head>
 <body>
     <header>
-        <a href="/"><h1 id="header-logo">MORSE TO TEXT</h1></a>
+        <a href="/"><h1 id="header-logo">TEXT TO MORSE</h1></a>
 <!--        <a href="/"><img src="../static/ru.png" width="35" height="35" alt="lang"></a>-->
+
             <p>
                 <label for="lang"></label>
                 <select id="lang" name="lang">
                     <option value="ru">RU</option>
                     <option value="eng">ENG</option>
+                </select>
+
+                <label for="how_tr"></label>
+                <select id="how_tr" name="how_tr">
+                    <option value="tm">Text -> Morse</option>
+                    <option value="mt">Morse -> Text</option>
                 </select>
             </p>
     </header>
@@ -133,12 +140,17 @@
 
   <script>
     const langSelect = document.getElementById("lang");
+    const trSelect = document.getElementById("how_tr");
 
     document.addEventListener("DOMContentLoaded", function() {
       const selectedLang = localStorage.getItem("selectedLang");
+      const selectedTr = localStorage.getItem("selectedTr");
 
       if (selectedLang) {
         langSelect.value = selectedLang;
+      }
+      if (selectedTr) {
+        trSelect.value = selectedTr;
       }
     });
 
@@ -147,14 +159,20 @@
       localStorage.setItem("selectedLang", selectedLang);
     });
 
+    trSelect.addEventListener("change", function() {
+      const selectedTr = trSelect.value;
+      localStorage.setItem("selectedTr", selectedTr);
+    });
+
 
     bTranslate.onclick = function(){
         let inputText = document.getElementById("input-text").value;
 
         const selectedLang = localStorage.getItem("selectedLang");
-
+        const selectedTr = localStorage.getItem("selectedTr");
+        console.log(inputText)
         if (selectedLang) {
-            fetch('/translate/'+ selectedLang + '/' + inputText)
+            fetch('/translate/' + selectedTr + '/' + selectedLang + '/' + '-' + inputText)
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById("output-text").removeAttribute("hidden");
@@ -163,9 +181,20 @@
                 .catch(error => {
                     console.log(error);
                 });
-          console.log("Выбранный язык:", selectedLang);
+            console.log("Выбранный метод:", selectedTr);
+            console.log("Выбранный язык:", selectedLang);
         } else {
           console.log("Выбранный язык не найден в localStorage");
+          localStorage.setItem("selectedLang", 'ru');
+          fetch('/translate/' + selectedTr + '/' + selectedLang + '/' + inputText)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("output-text").removeAttribute("hidden");
+                    document.getElementById("output-text").value = data.result;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
     }
   </script>
