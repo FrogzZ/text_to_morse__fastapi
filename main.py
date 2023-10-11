@@ -25,6 +25,7 @@ async def api(request: Request):
 
 @app.get("/translate/{method}/{lang}/{input_text}")
 async def translate(method: str, lang: str, input_text: str):
+    print(input_text)
     lang_list = morse.ru if lang == 'ru' else morse.eu
     res = ''
     input_text = input_text[1:]

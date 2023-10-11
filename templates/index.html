@@ -110,7 +110,7 @@
 <!--        <a href="/"><img src="../static/ru.png" width="30" height="30" alt="lang"></a>-->
 
         <menu>
-            <img id="langImage" src="../static/ru.png" width="30" height="30" alt="lang" onclick="changeImage()">
+            <img id="langImage" src="../static/ru.png" width="30" height="30" alt="lang">
             <p>
                 <label for="lang"></label>
                 <select id="lang" name="lang">
@@ -155,39 +155,30 @@
 
 
   <script>
-
-      function changeImage() {
-      var langImage = document.getElementById("langImage");
-      var currentSrc = langImage.getAttribute("src");
-
-      var selectedLang = langSelect.value;
-      langImage.setAttribute("src", newSrc);
-      var newSrc = (currentSrc === "../static/ru.png") ? "../static/usa.png" : "../static/ru.png";
-      var newLang = (currentSrc === "../static/ru.png") ? "eng" : "ru";
-      langImage.setAttribute("src", newSrc);
-      localStorage.setItem("selectedLang", newLang);
-      localStorage.setItem("selectedImg", newSrc);
-      }
-
-
     const langSelect = document.getElementById("lang");
     const trSelect = document.getElementById("how_tr");
 
     document.addEventListener("DOMContentLoaded", function() {
       const selectedLang = localStorage.getItem("selectedLang");
       const selectedTr = localStorage.getItem("selectedTr");
+      const langImage = document.getElementById("langImage");
 
       if (selectedLang) {
         langSelect.value = selectedLang;
       }
       if (selectedTr) {
         trSelect.value = selectedTr;
+        var newSrc = (selectedLang === "eng") ? "../static/usa.png" : "../static/ru.png";
+        langImage.setAttribute("src", newSrc);
       }
     });
 
     langSelect.addEventListener("change", function() {
       const selectedLang = langSelect.value;
       localStorage.setItem("selectedLang", selectedLang);
+      var langImage = document.getElementById("langImage");
+      var newSrc = (selectedLang === "eng") ? "../static/usa.png" : "../static/ru.png";
+      langImage.setAttribute("src", newSrc);
     });
 
     trSelect.addEventListener("change", function() {
@@ -202,7 +193,7 @@
         const selectedLang = localStorage.getItem("selectedLang");
         const selectedTr = localStorage.getItem("selectedTr");
         if (selectedLang) {
-            fetch('/translate/' + selectedTr + '/' + selectedLang + '/' + '-' + inputText)
+            fetch('/translate/' + selectedTr + '/' + selectedLang + '/' + '-' + encodeURIComponent(inputText))
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById("output-text").removeAttribute("hidden");
@@ -217,7 +208,7 @@
           console.log("Выбранный язык не найден в localStorage");
           localStorage.setItem("selectedLang", 'ru');
           localStorage.setItem("selectedTr", 'tm');
-          fetch('/translate/' + 'tm' + '/' + 'ru' + '/' + inputText)
+          fetch('/translate/' + 'tm' + '/' + 'ru' + '/' + '-' + encodeURIComponent(inputText))
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById("output-text").removeAttribute("hidden");
