@@ -192,7 +192,7 @@
 
         const selectedLang = localStorage.getItem("selectedLang");
         const selectedTr = localStorage.getItem("selectedTr");
-        if (selectedLang) {
+        if (selectedLang && selectedTr){
             fetch('/translate/' + selectedTr + '/' + selectedLang + '/' + '-' + encodeURIComponent(inputText))
                 .then(response => response.json())
                 .then(data => {
